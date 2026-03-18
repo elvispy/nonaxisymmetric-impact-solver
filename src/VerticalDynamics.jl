@@ -3,20 +3,21 @@ module VerticalDynamics
 include("dtn/toeplitz_operator.jl")
 include("dtn/apply.jl")
 include("solver/types.jl")
+include("visualization.jl")
 include("solver/domain.jl")
 include("solver/assembly.jl")
 include("solver/operator.jl")
 include("solver/krylov.jl")
 include("solver/time_marching.jl")
 
-export PeriodicDtN2D
 export CorrectedKernelDtN2D
-export build_periodic_dtn
 export build_corrected_kernel_dtn
 export build_toeplitz_dtn
 export grid_coordinates
 export apply
 export apply_direct
+export compute_eta_color_limits
+export render_eta_video
 export SolverConfig
 export SolverDomain
 export SolverSystem

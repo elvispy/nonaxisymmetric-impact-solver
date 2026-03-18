@@ -2,14 +2,6 @@ using FFTW
 
 const DTN_CONSTANT = 1.0 / (2.0 * π)
 
-struct PeriodicDtN2D
-    nx::Int
-    ny::Int
-    dx::Float64
-    kernel::Matrix{Float64}
-    kernel_fft::Matrix{ComplexF64}
-end
-
 struct CorrectedKernelDtN2D
     nx::Int
     ny::Int
@@ -48,22 +40,6 @@ function build_corrected_kernel_dtn(nx::Integer, ny::Integer, dx::Real; near_rad
     kernel_fft = fft(_embed_kernel_for_linear_convolution(kernel, fft_shape))
 
     return CorrectedKernelDtN2D(nx_i, ny_i, dx_f, near_i, quad_i, kernel, kernel_fft, fft_shape)
-end
-
-"""
-    build_periodic_dtn(nx, ny, dx)
-
-Construct the exact periodic DtN operator using the Fourier symbol `|k|`.
-"""
-function build_periodic_dtn(nx::Integer, ny::Integer, dx::Real)
-    nx_i = Int(nx)
-    ny_i = Int(ny)
-    dx_f = Float64(dx)
-
-    symbol = _build_symbol(nx_i, ny_i, dx_f)
-    kernel = _fftshift(real.(ifft(symbol)))
-
-    return PeriodicDtN2D(nx_i, ny_i, dx_f, kernel, ComplexF64.(symbol))
 end
 
 """Build the corrected real-space DtN kernel on a finite uniform grid."""
@@ -150,42 +126,6 @@ function _cell_average_inverse_radius(m::Int, n::Int, dx::Float64, quadrature_or
         acc += wξ * wη / sqrt(x^2 + y^2)
     end
     return (dx^2 / 4.0) * acc
-end
-
-"""Build the periodic DtN Fourier symbol `|k|` on the discrete grid."""
-function _build_symbol(nx::Int, ny::Int, dx::Float64)
-    lx = nx * dx
-    ly = ny * dx
-    kx = _angular_frequencies(nx, lx)
-    ky = _angular_frequencies(ny, ly)
-
-    symbol = zeros(Float64, nx, ny)
-    for j in 1:ny, i in 1:nx
-        symbol[i, j] = hypot(kx[i], ky[j])
-    end
-    return symbol
-end
-
-"""Return centered angular frequencies for a periodic grid of a given physical length."""
-function _angular_frequencies(n::Int, length::Float64)
-    freqs = zeros(Float64, n)
-    half = fld(n, 2)
-    scale = 2π / length
-    for i in 1:n
-        m = i - 1
-        if m > half
-            m -= n
-        end
-        freqs[i] = scale * m
-    end
-    return freqs
-end
-
-"""Apply a 2D FFT shift to move the zero mode to the center."""
-function _fftshift(A::AbstractMatrix)
-    sx = fld(size(A, 1), 2)
-    sy = fld(size(A, 2), 2)
-    return circshift(A, (sx, sy))
 end
 
 """Embed a centered kernel into a padded array for linear FFT convolution."""

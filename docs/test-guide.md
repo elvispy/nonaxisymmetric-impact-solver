@@ -9,7 +9,6 @@ julia --project=. -e 'using Pkg; Pkg.test()'
 A green run means:
 
 - DtN operator construction and application remain internally consistent
-- the periodic reference and corrected nonperiodic DtN paths still satisfy their checked properties
 - the prescribed-contact solver still matches its dense and matrix-free formulations on the covered small-grid cases
 
 ## DtN Tests
@@ -18,11 +17,6 @@ A green run means:
 
 - Covers: [src/dtn/toeplitz_operator.jl](/Users/eaguerov/Documents/Github/vertical-dynamics/src/dtn/toeplitz_operator.jl)
 - Verifies: constructor availability, returned types, kernel dimensions
-
-### [test/test_nullspace.jl](/Users/eaguerov/Documents/Github/vertical-dynamics/test/test_nullspace.jl)
-
-- Covers: [src/dtn/apply.jl](/Users/eaguerov/Documents/Github/vertical-dynamics/src/dtn/apply.jl)
-- Verifies: periodic constants map to zero
 
 ### [test/test_kernel_structure.jl](/Users/eaguerov/Documents/Github/vertical-dynamics/test/test_kernel_structure.jl)
 
@@ -38,11 +32,6 @@ A green run means:
 
 - Covers: [src/dtn/apply.jl](/Users/eaguerov/Documents/Github/vertical-dynamics/src/dtn/apply.jl)
 - Verifies: FFT and direct application agree
-
-### [test/test_fourier_modes.jl](/Users/eaguerov/Documents/Github/vertical-dynamics/test/test_fourier_modes.jl)
-
-- Covers: [src/dtn/toeplitz_operator.jl](/Users/eaguerov/Documents/Github/vertical-dynamics/src/dtn/toeplitz_operator.jl), [src/dtn/apply.jl](/Users/eaguerov/Documents/Github/vertical-dynamics/src/dtn/apply.jl)
-- Verifies: exact periodic Fourier-mode action
 
 ### [test/test_convergence.jl](/Users/eaguerov/Documents/Github/vertical-dynamics/test/test_convergence.jl)
 

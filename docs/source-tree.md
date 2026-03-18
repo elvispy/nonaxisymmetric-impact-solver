@@ -8,7 +8,7 @@ Purpose: loads the DtN and solver subsystems and exports the public API.
 
 Key exported symbols:
 
-- DtN: `PeriodicDtN2D`, `CorrectedKernelDtN2D`, `build_periodic_dtn`, `build_corrected_kernel_dtn`, `build_toeplitz_dtn`, `apply`, `apply_direct`, `grid_coordinates`
+- DtN: `CorrectedKernelDtN2D`, `build_corrected_kernel_dtn`, `build_toeplitz_dtn`, `apply`, `apply_direct`, `grid_coordinates`
 - Solver: `SolverConfig`, `SolverDomain`, `SolverSystem`, `SolverState`, `build_solver`, `build_solver_domain`, `build_dense_dtn_matrix`, `assemble_step_system`, `step_layout`, `build_step_rhs`, `apply_step_operator`, `apply_step_operator!`, `gmres_solve`, `advance_one_step`, `solve_motion`, `zero_state`
 
 ## DtN Subsystem
@@ -21,11 +21,8 @@ Purpose: defines the DtN operator types and constructs their kernels.
 
 Key functions and types:
 
-- `PeriodicDtN2D`
-  Exact periodic Fourier-symbol operator.
 - `CorrectedKernelDtN2D`
   Nonperiodic corrected kernel with FFT-based linear convolution support.
-- `build_periodic_dtn(nx, ny, dx)`
 - `build_corrected_kernel_dtn(nx, ny, dx; near_radius, quadrature_order)`
 - `build_toeplitz_dtn(...)`
   Current default alias for the corrected nonperiodic operator.
@@ -43,8 +40,6 @@ Purpose: applies DtN operators either directly or by FFT.
 
 Key functions:
 
-- `apply_direct(op::PeriodicDtN2D, x)`
-- `apply(op::PeriodicDtN2D, x)`
 - `apply_direct(op::CorrectedKernelDtN2D, x)`
 - `apply(op::CorrectedKernelDtN2D, x)`
 
