@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+
+# Julia local state
+.julia_depot/
+*.jl.cov
+*.jl.mem
+
+# Generated outputs
+outputs/
+
+# Editor / swap noise
+*.swp
+*.swo
+*~
