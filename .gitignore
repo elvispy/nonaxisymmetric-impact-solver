@@ -1,15 +1,22 @@
-# macOS
-.DS_Store
 
-# Julia local state
+.claude/
+.DS_Store
+.gemini/
+.idea/
 .julia_depot/
+.requirements/
+.vscode/
 *.jl.cov
 *.jl.mem
-
-# Generated outputs
-outputs/
-
-# Editor / swap noise
-*.swp
 *.swo
+*.swp
+**/__pycache__/
+**/*.pyc
 *~
+# --- Bookkeeping ---
+# Editor / swap noise
+# Generated outputs
+# Julia local state
+# macOS
+outputs/
+tmp/
